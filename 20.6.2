@@ -1,0 +1,13 @@
+import scipy.io as scio
+import numpy as np
+from scipy import optimize
+def function(x,p,u,w):
+    return (18-p)*np.exp(u*w*x)*np.cos(w*x)+p
+def residuals(sigma,y_hat,x):
+    p,u,w = sigma
+    return y_hat - function(p,u,w,x)
+def jisuan(x,y_hat):
+    sigma0 = [0,0.01,0.5] # 参数的初始化值
+    plesq = optimize.curve_fit(function,x,y_hat)#,bounds=([-30,0,0.3],[30,0.1,1]))
+    return plesq
+print(jisuan([1,2,3],[1,6,7]))
